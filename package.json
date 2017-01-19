@@ -1,0 +1,27 @@
+{
+  "name": "evisit-core-js",
+  "version": "0.1.0",
+  "description": "eVisit Core Javascript library",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/jasmine/bin/jasmine.js --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eVisit/eVisit-Core-JS.git"
+  },
+  "keywords": [
+    "evisit"
+  ],
+  "author": "eVisit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eVisit/eVisit-Core-JS/issues"
+  },
+  "homepage": "https://github.com/eVisit/eVisit-Core-JS#readme",
+  "devDependencies": {
+    "babel-preset-env": "^1.1.8",
+    "babel-register": "^6.18.0",
+    "jasmine": "^2.5.3"
+  }
+}
