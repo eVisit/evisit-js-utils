@@ -62,6 +62,7 @@ describe('API', function() {
       fail: false
     }).then((data) => {
       expect(trace.join(':')).toEqual('before:beforeSuccess:success:always');
+      expect(data.fetchCalled).toBe(true);
       done();
     }, (result) => {
       fail('I should not have failed!');
@@ -87,8 +88,62 @@ describe('API', function() {
     api.test({
       fail: false
     }).then((data) => {
-      expect(trace.join(':')).toEqual('before:always');
+      expect(trace.join(':')).toEqual('before:beforeSuccess:success:always');
       expect(data.fetchCalled).toBe(undefined);
+      done();
+    }, (result) => {
+      fail('I should not have failed!');
+      done();
+    });
+  });
+
+  it('should be able to inherit', async function(done) {
+    api.registerRoute('test2', 'test', function(APIRoute) {
+      return class Test2Route extends APIRoute {
+        constructor() {
+          super(...arguments);
+        }
+
+        async before() {
+          await super.before(...arguments);
+          trace.push('before');
+        }
+
+        async beforeSuccess(result) {
+          await super.beforeSuccess(...arguments);
+          trace.push('beforeSuccess');
+
+          if (result.status !== true)
+            throw 'Error fetching resource';
+        }
+
+        async success(result) {
+          await super.success(...arguments);
+          trace.push('success');
+        }
+
+        async beforeError(result) {
+          await super.beforeError(...arguments);
+          trace.push('beforeError');
+        }
+
+        async error(result) {
+          await super.error(...arguments);
+          trace.push('error');
+        }
+
+        async always() {
+          await super.always(...arguments);
+          trace.push('always');
+        }
+      };
+    });
+
+    api.test2({
+      fail: false
+    }).then((data) => {
+      expect(trace.join(':')).toEqual('before:before:beforeSuccess:beforeSuccess:success:success:always:always');
+      expect(data.fetchCalled).toBe(true);
       done();
     }, (result) => {
       fail('I should not have failed!');
