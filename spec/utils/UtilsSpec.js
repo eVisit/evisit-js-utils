@@ -1,5 +1,3 @@
-require("babel-polyfill");
-
 describe('prop', function() {
 	var utils = require('../../lib/utils'),
 			obj;
