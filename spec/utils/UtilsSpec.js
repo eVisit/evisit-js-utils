@@ -49,4 +49,8 @@ describe('prop', function() {
     expect(utils.get(obj, 'deep.list[1]')).toBe('SECOND');
     expect(utils.get(obj, 'deep.list[2].more')).toBe('HOLY MOLY!');
   });
+
+  it('should be able to parse HTML', function() {
+    utils.parseHTML('<div hello="world">This is text <span>This is not</span></div>');
+  });
 });
