@@ -35,5 +35,8 @@
     "jasmine": "^2.5.3",
     "node.ajax": "^2.4.3",
     "webpack": "^2.2.0"
+  },
+  "dependencies": {
+    "events": "^1.1.1"
   }
 }
