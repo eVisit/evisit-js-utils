@@ -35,8 +35,5 @@
     "jasmine": "^2.5.3",
     "node.ajax": "^2.4.3",
     "webpack": "^2.2.0"
-  },
-  "dependencies": {
-    "htmlparser2": "^3.9.2"
   }
 }
