@@ -66,4 +66,16 @@ describe('prop', function() {
       done();
     });
   });
+
+  it('should be able to change validators message', async function(done) {
+    var validatorFunc = validators.validatorFunction('required(message:Hawt dog! It is empty!)');
+    
+    validatorFunc(null, 'validate').then(function(result) {
+      fail('I should not have succeeded!');
+      done();
+    }).catch(function(error) {
+      expect(error[1]).toBe('Hawt dog! It is empty!');
+      done();
+    });
+  });
 });

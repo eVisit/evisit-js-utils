@@ -23,6 +23,7 @@ describe('API', function() {
         return class TestRoute extends APIRoute {
           constructor() {
             super(...arguments);
+            //this.debug = true;
           }
 
           async before() {
@@ -58,7 +59,7 @@ describe('API', function() {
   });
 
   it('should be able to make a successful call', async function(done) {
-    api.test({
+    await api.test({
       fail: false
     }).then((data) => {
       expect(trace.join(':')).toEqual('before:beforeSuccess:success:always');
@@ -71,7 +72,7 @@ describe('API', function() {
   });
 
 	it('should be able to fail inside beforeSuccess', async function(done) {
-    api.test({
+    await api.test({
       fail: true
     }).then((data) => {
       fail('I should not have succeeded!');
@@ -85,7 +86,7 @@ describe('API', function() {
   it('should be able to use fake data', async function(done) {
     api.fakeData = {test: {status: true}};
 
-    api.test({
+    await api.test({
       fail: false
     }).then((data) => {
       expect(trace.join(':')).toEqual('before:beforeSuccess:success:always');
@@ -139,7 +140,7 @@ describe('API', function() {
       };
     });
 
-    api.test2({
+    await api.test2({
       fail: false
     }).then((data) => {
       expect(trace.join(':')).toEqual('before:before:beforeSuccess:beforeSuccess:success:success:always:always');
