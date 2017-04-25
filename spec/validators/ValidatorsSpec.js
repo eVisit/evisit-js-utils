@@ -9,10 +9,10 @@ describe('prop', function() {
     validatorFunc(undefined, 'validate').then(function() {
       fail('I should not have succeeded!');
       done();
-    }).catch(function(error) {
-      expect(error).toEqual(jasmine.any(Array));
-      expect(error[0]).toBe('error');
-      expect(error[1]).toBe('Value required');
+    }).catch(function(_error) {
+      var error = _error.error;
+      expect(error.type).toBe('error');
+      expect(error.message).toBe('Value required');
       done();
     });
 
@@ -21,7 +21,8 @@ describe('prop', function() {
       expect(result[0]).toBe('not empty');
       expect(result[1]).toBe('validate');
       done();
-    }).catch(function(error) {
+    }).catch(function(_error) {
+      var error = _error.error;
       fail('I should not have failed!');
       done();
     });
@@ -33,10 +34,10 @@ describe('prop', function() {
     validatorFunc('derp', 'validate').then(function() {
       fail('I should not have succeeded!');
       done();
-    }).catch(function(error) {
-      expect(error).toEqual(jasmine.any(Array));
-      expect(error[0]).toBe('error');
-      expect(error[1]).toBe('Invalid email address');
+    }).catch(function(_error) {
+      var error = _error.error;
+      expect(error.type).toBe('error');
+      expect(error.message).toBe('Invalid email address');
       done();
     });
 
@@ -45,7 +46,8 @@ describe('prop', function() {
       expect(result[0]).toBe('derp@test.com');
       expect(result[1]).toBe('validate');
       done();
-    }).catch(function(error) {
+    }).catch(function(_error) {
+      var error = _error.error;
       fail('I should not have failed!');
       done();
     });
@@ -61,7 +63,8 @@ describe('prop', function() {
       expect(result[2].test).toBe('derp');
       expect(result[2].hello).toBe(true);
       done();
-    }).catch(function(error) {
+    }).catch(function(_error) {
+      var error = _error.error;
       fail('I should not have failed!');
       done();
     });
@@ -73,8 +76,9 @@ describe('prop', function() {
     validatorFunc(null, 'validate').then(function(result) {
       fail('I should not have succeeded!');
       done();
-    }).catch(function(error) {
-      expect(error[1]).toBe('Hawt dog! It is empty!');
+    }).catch(function(_error) {
+      var error = _error.error;
+      expect(error.message).toBe('Hawt dog! It is empty!');
       done();
     });
   });
