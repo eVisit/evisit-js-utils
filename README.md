@@ -1,1 +1,1 @@
-This is a readme! Crazy eh'?
+This is an eVisit utility library for common low level functionality. Please see the WIKI for a better overview of available functionality and how it is used.
