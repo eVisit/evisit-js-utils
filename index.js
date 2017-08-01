@@ -1,6 +1,7 @@
+'use strict';
+
 module.exports = {
-	utils: require('./lib/utils.js'),
-	data: require('./lib/data.js'),
-	api: require('./lib/api.js'),
-  validators: require('./lib/validators.js')
+	utils: require('./dist/utils.js'),
+	data: require('./dist/data.js'),
+	validators: require('./dist/validators.js')
 };
