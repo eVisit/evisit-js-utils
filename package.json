@@ -1,6 +1,6 @@
 {
   "name": "evisit-js-utils",
-  "version": "0.4.14",
+  "version": "0.5.0",
   "description": "eVisit Javascript Utility library",
   "main": "index.js",
   "scripts": {
