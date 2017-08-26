@@ -4,7 +4,7 @@
   "description": "eVisit Javascript Utility library",
   "main": "index.js",
   "scripts": {
-    "test": "babel-node spec/run.js",
+    "test": "node node_modules/babel-cli/bin/babel-node.js --presets=env spec/run.js",
     "doc-gen": "echo \"./node_modules/gh-wiki-gen/bin/gh-wiki-gen\" is currently not working and will be fixed in the future",
     "clean": "node node_modules/rimraf/bin.js dist",
     "build": "node node_modules/babel-cli/bin/babel.js lib --presets=env --out-dir dist",
@@ -31,5 +31,7 @@
     "jasmine": "^2.5.3",
     "rimraf": "^2.5.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "moment": "^2.18.1"
+  }
 }
