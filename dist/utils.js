@@ -292,9 +292,7 @@ function id(node, set) {
 }
 
 /**
-* Get/set object aliases (from meta properties)
-*
-* @function aliases
+* @function aliases Get/set object aliases (from meta properties)
 * @param {Object} {obj} Object to get / set aliases from
 * @param {Array|String} {[set]} If specified as an Array, set the entire aliases array to this. If specified as a string, add this alias to the list of aliases
 * @return {Array} List of aliases
@@ -326,9 +324,7 @@ function aliases(node, set) {
 }
 
 /**
-* Get audit information on object
-*
-* @function audit
+* @function audit Get audit information on object
 * @param {Object} {obj} Object to get audit information on
 * @param {String} {[which]} 'meta' or 'base'. If 'meta', get audit information on meta property updates. If 'base', get audit information on base property updates. If neither is specified, get the most recently updated (meta or base, whichever is most recent)
 * @return {Object} Meta information object, i.e {created: (timestamp), modified: (timestamp), updateCount: (count)}
@@ -353,10 +349,8 @@ function audit(node, _which) {
 }
 
 /**
-* Delete ALL deletable properties from an object. This is useful when
-* you want to "empty" an object while retaining all references to this object.
-*
-* @function empty
+* @function empty Delete ALL deletable properties from an object. This is useful when you want to "empty"
+* an object while retaining all references to this object.
 * @param {Object} {obj} Object to "clear"
 * @return {Object} Same object but with all properties removed
 * @note This could possibly have huge performance implications
@@ -646,7 +640,7 @@ function formatterValidatorChainFactory(funcPool, _funcs, _args) {
           if (actualFunc instanceof Function) {
             (function (name, funcArgs, func) {
               finalFuncs.push(function (val, op, args) {
-                var thisArgs = (0, _data.extend)(true, {}, funcArgs, args),
+                var thisArgs = (0, _data.extend)({}, funcArgs, args),
                     ret;
 
                 try {
@@ -726,9 +720,7 @@ function formatterValidatorChainFactory(funcPool, _funcs, _args) {
 root.getFunctionsAndArguments = getFunctionsAndArguments;
 root.formatterValidatorChainFactory = formatterValidatorChainFactory;
 /**
-* Get a property from an object and all sub-objects by evaluating a dot-notation path into an object.
-*
-* @function get
+* @function get Get a property from an object and all sub-objects by evaluating a dot-notation path into an object.
 * @param {Object} {obj} Object to get property from
 * @param {String} {path} Dot notation path to evaluate
 * @param {*} {[defaultValue=undefined]} Specify a default value to return if the requested property is not found, is null, undefined, NaN or !isFinite
@@ -744,9 +736,7 @@ root.formatterValidatorChainFactory = formatterValidatorChainFactory;
 root.get = prop.bind(root, 'get');
 
 /**
-* Set a property on an object by evaluating a dot-notation path into an object.
-*
-* @function set
+* @function set Set a property on an object by evaluating a dot-notation path into an object.
 * @param {Object} {obj} Object to set property on
 * @param {String} {path} Dot notation path to evaluate
 * @param {*} {value} Value to set
@@ -763,9 +753,7 @@ root.get = prop.bind(root, 'get');
 root.set = prop.bind(root, 'set');
 
 /**
-* Remove a property from an object/sub-object by evaluating a dot-notation path into an object.
-*
-* @function remove
+* @function remove Remove a property from an object/sub-object by evaluating a dot-notation path into an object.
 * @param {Object} {obj} Object to remove property from
 * @param {String} {path} Dot notation path to evaluate
 * @return {*} Return property value of removed key specified by path
@@ -777,9 +765,7 @@ root.set = prop.bind(root, 'set');
 root.remove = prop.bind(root, 'remove');
 
 /**
-* Get a meta property from an object and all sub-objects by evaluating a dot-notation path into an object. This is the same as @@get except it is used for object meta properties
-*
-* @function getMeta
+* @function getMeta Get a meta property from an object and all sub-objects by evaluating a dot-notation path into an object. This is the same as @@get except it is used for object meta properties
 * @param {Object} {obj} Object to get meta property from
 * @param {String} {path} Dot notation path to evaluate
 * @param {*} {[defaultValue=undefined]} Specify a default value to return if the requested meta property is not found, is null, undefined, NaN or !isFinite
@@ -789,9 +775,7 @@ root.remove = prop.bind(root, 'remove');
 root.getMeta = prop.bind(root, 'getMeta');
 
 /**
-* Set a meta property on an object by evaluating a dot-notation path into an object. This is the same as @@set except it is used for object meta properties
-*
-* @function setMeta
+* @function setMeta Set a meta property on an object by evaluating a dot-notation path into an object. This is the same as @@set except it is used for object meta properties
 * @param {Object} {obj} Object to set meta property on
 * @param {String} {path} Dot notation path to evaluate
 * @param {*} {value} Value to set
@@ -801,9 +785,7 @@ root.getMeta = prop.bind(root, 'getMeta');
 root.setMeta = prop.bind(root, 'setMeta');
 
 /**
-* Remove a meta property from an object/sub-objects by evaluating a dot-notation path into an object. This is the same as @@remove except it is used for object meta properties
-*
-* @function removeMeta
+* @function removeMeta Remove a meta property from an object/sub-objects by evaluating a dot-notation path into an object. This is the same as @@remove except it is used for object meta properties
 * @param {Object} {obj} Object to remove meta property from
 * @param {String} {path} Dot notation path to evaluate
 * @return {*} Return property value of removed key specified by path
@@ -812,9 +794,7 @@ root.setMeta = prop.bind(root, 'setMeta');
 root.removeMeta = prop.bind(root, 'removeMeta');
 
 /**
-* Get a namespaced meta property from an object and all sub-objects by evaluating a dot-notation path into an object. This is the same as @@getMeta except that the value is retrieved from a namespace
-*
-* @function getMetaNS
+* @function getMetaNS Get a namespaced meta property from an object and all sub-objects by evaluating a dot-notation path into an object. This is the same as @@getMeta except that the value is retrieved from a namespace
 * @param {Object} {obj} Object to get meta property from
 * @param {String} {namespace} Namespace to store meta property in
 * @param {String} {path} Dot notation path to evaluate
@@ -826,9 +806,7 @@ root.removeMeta = prop.bind(root, 'removeMeta');
 root.getMetaNS = prop.bind(root, 'getMetaNS');
 
 /**
-* Set a namespaced meta property on an object by evaluating a dot-notation path into an object. This is the same as @@setMeta except that the value is stored in a namespace
-*
-* @function setMetaNS
+* @function setMetaNS Set a namespaced meta property on an object by evaluating a dot-notation path into an object. This is the same as @@setMeta except that the value is stored in a namespace
 * @param {Object} {obj} Object to set meta property on
 * @param {String} {namespace} Namespace to store meta property in
 * @param {String} {path} Dot notation path to evaluate
@@ -839,9 +817,7 @@ root.getMetaNS = prop.bind(root, 'getMetaNS');
 root.setMetaNS = prop.bind(root, 'setMetaNS');
 
 /**
-* Remove a namespaced meta property from an object/sub-objects by evaluating a dot-notation path into an object. This is the same as @@removeMeta except that the value is retrieved from a namespace
-*
-* @function removeMetaNS
+* @function removeMetaNS Remove a namespaced meta property from an object/sub-objects by evaluating a dot-notation path into an object. This is the same as @@removeMeta except that the value is retrieved from a namespace
 * @param {Object} {obj} Object to remove meta property from
 * @param {String} {namespace} Namespace to remove meta property in
 * @param {String} {path} Dot notation path to evaluate
