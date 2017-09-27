@@ -349,8 +349,8 @@ function audit(node, _which) {
 }
 
 /**
-* @function empty Delete ALL deletable properties from an object. This is useful when you want to "empty"
-* an object while retaining all references to this object.
+* @function empty Delete ALL deletable properties from an object. This is useful when
+* you want to "empty" an object while retaining all references to this object.
 * @param {Object} {obj} Object to "clear"
 * @return {Object} Same object but with all properties removed
 * @note This could possibly have huge performance implications
@@ -417,12 +417,26 @@ function instanceOf(obj) {
     return false;
   }
 
+  if (arguments.length === 2 && arguments[1] === 'object') return arguments[0] && !instanceOf(arguments[0], 'string', 'number', 'boolean', 'array', 'function');
+
   for (var i = 1, len = arguments.length; i < len; i++) {
     if (testType(obj, arguments[i]) === true) return true;
   }
 
   return false;
 };
+
+/**
+* @function {expectType} Check to see if first argument is any of **types**, if it isn't, return **defaultValue**
+* @param {Object} {obj} Object to check
+* @param {String|Class|Array[String|Class]} {types...} Data type(s) to check against
+* @param {Object} {defaultValue} Default value to return if **obj** doesn't match any of the specified types
+* @return {Boolean} **true** if object matches any one of *types*, **false** if not.
+*/
+function expectType(obj, _types, defaultValue) {
+  var types = _types instanceof Array ? _types : [_types];
+  return instanceOf.apply(this, [obj].concat(types)) ? obj : defaultValue;
+}
 
 /**
 * @function {sizeOf} Return the size of an Object, Array or String. Size is ascertained in the following manner:<br>
@@ -826,8 +840,21 @@ root.setMetaNS = prop.bind(root, 'setMetaNS');
 **/
 root.removeMetaNS = prop.bind(root, 'removeMetaNS');
 
-root.equal = equal;
+/**
+* @function uuid Generate a random UUID
+* @return {String} Return randomly generated UUID
+**/
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+  });
+}
 
+root.expectType = expectType;
+root.uuid = uuid;
+root.equal = equal;
 root.id = id;
 root.aliases = aliases;
 root.audit = audit;
