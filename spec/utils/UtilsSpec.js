@@ -20,6 +20,22 @@ describe('prop', function() {
     };
   });
 
+  it('should be able to properly identify types', function() {
+    expect(utils.instanceOf({}, 'object')).toBe(true);
+    expect(utils.instanceOf(new String('test'), 'object')).toBe(false);
+    expect(utils.instanceOf(new String('test'), 'string')).toBe(true);
+    expect(utils.instanceOf('test', 'string')).toBe(true);
+    expect(utils.instanceOf(5, 'string')).toBe(false);
+  });
+
+  it('should be able to properly expect types', function() {
+    var obj = {};
+    expect(utils.expectType(obj, 'object')).toBe(obj);
+    expect(utils.expectType(new String('test'), 'object', 'derp')).toBe('derp');
+    expect(utils.expectType(obj, 'string', 'derp')).toBe('derp');
+    expect(utils.expectType(obj, 'function')).toBe(undefined);
+  });
+
 	it('should be able to get a property', function() {
     expect(utils.get(obj, 'hello')).toBe('World');
     expect(utils.get(obj, 'bool')).toBe(true);
