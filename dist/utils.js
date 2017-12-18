@@ -16,13 +16,22 @@ var _data = require('./data');
 
 var root = {};
 
-function defineProperty(writable, obj, name, value) {
-  Object.defineProperty(obj, name, {
-    writable: writable,
+function defineProperty(writable, obj, name, value, get, set) {
+  var def = {
     enumerable: false,
     configurable: false,
     value: value
-  });
+  };
+
+  if (get instanceof Function || set instanceof Function) {
+    def.get = get;
+    def.set = set;
+  } else {
+    def.writable = writable;
+    def.value = value;
+  }
+
+  Object.defineProperty(obj, name, def);
 }
 
 var defineROProperty = defineProperty.bind(undefined, false),
