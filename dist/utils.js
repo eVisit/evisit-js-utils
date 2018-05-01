@@ -19,8 +19,7 @@ var root = {};
 function defineProperty(writable, obj, name, value, get, set) {
   var def = {
     enumerable: false,
-    configurable: false,
-    value: value
+    configurable: false
   };
 
   if (get instanceof Function || set instanceof Function) {
@@ -143,9 +142,11 @@ function prop(cmd, _node, namespace) {
       break;
   }
 
-  if (op & GET) {
-    //Do we need to return the default value?
-    if (!context || !(context instanceof Object) || typeof context === 'string' || typeof context === 'number' || typeof context === 'boolean' || context instanceof String || context instanceof Number || context instanceof Boolean) return arguments[argStartIndexOne];
+  //Do we need to return the default value?
+  if (!context || !(context instanceof Object) || typeof context === 'string' || typeof context === 'number' || typeof context === 'boolean' || context instanceof String || context instanceof Number || context instanceof Boolean) {
+    if (op & (GET | REMOVE)) return arguments[argStartIndexOne];
+
+    throw new Error('Attempt to set on and empty context');
   }
 
   var prop,
