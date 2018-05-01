@@ -19,7 +19,7 @@ var root = {};
 function defineProperty(writable, obj, name, value, get, set) {
   var def = {
     enumerable: false,
-    configurable: false
+    configurable: writable
   };
 
   if (get instanceof Function || set instanceof Function) {

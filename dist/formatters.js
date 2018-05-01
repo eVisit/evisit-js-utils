@@ -92,7 +92,7 @@ var formatters = {
 
     if (!args) args = {};
 
-    var thisArgs = base.data.extend({ format: 'MM/DD/YYYY' }, args);
+    var thisArgs = Object.assign({ format: 'MM/DD/YYYY' }, args);
     return formatters.time(val, op, thisArgs);
   },
   'number': function number(val, op, args) {
