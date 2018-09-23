@@ -12,15 +12,12 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _data = require('./data');
-
 var root = {};
 
 function defineProperty(writable, obj, name, value, get, set) {
   var def = {
     enumerable: false,
-    configurable: false,
-    value: value
+    configurable: false
   };
 
   if (get instanceof Function || set instanceof Function) {
@@ -663,7 +660,7 @@ function formatterValidatorChainFactory(funcPool, _funcs, _args) {
           if (actualFunc instanceof Function) {
             (function (name, funcArgs, func) {
               finalFuncs.push(function (val, op, args) {
-                var thisArgs = (0, _data.extend)({}, funcArgs, args),
+                var thisArgs = Object.assign({}, funcArgs, args),
                     ret;
 
                 try {
@@ -729,7 +726,7 @@ function formatterValidatorChainFactory(funcPool, _funcs, _args) {
       return doNextFunc.call(this, val, op, formatterArgs, funcArgs, index + 1, resolve, reject);
     }
 
-    var formatterArgs = (0, _data.extend)({}, userArgs, args);
+    var formatterArgs = Object.assign({}, userArgs, args);
     if (op === 'validate') {
       return new Promise(function (resolve, reject) {
         doNextFunc.call(this, val, op, formatterArgs, formatterArgs, 0, resolve, reject);
