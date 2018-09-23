@@ -37,6 +37,12 @@ describe('prop', function() {
   });
 
 	it('should be able to get a property', function() {
+    expect(utils.get(undefined, 'hello', 'other')).toBe('other');
+    expect(utils.get(null, 'hello', 'other')).toBe('other');
+    expect(utils.get(0, 'hello', 'other')).toBe('other');
+    expect(utils.get('bad', 'hello', 'other')).toBe('other');
+    expect(utils.get(false, 'hello', 'other')).toBe('other');
+    expect(utils.get(true, 'hello', 'other')).toBe('other');
     expect(utils.get(obj, 'hello')).toBe('World');
     expect(utils.get(obj, 'bool')).toBe(true);
     expect(utils.get(obj, 'number')).toBe(5);
@@ -48,6 +54,8 @@ describe('prop', function() {
   });
 
   it('should be able to set a property', function() {
+    expect(() => utils.set(undefined, 'hello', 'Other World')).toThrow(new Error('Attempt to set on and empty context'));
+
   	utils.set(obj, 'hello', 'Other World');
   	utils.set(obj, 'bool', false);
   	utils.set(obj, 'number', 12);
