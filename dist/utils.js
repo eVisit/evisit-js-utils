@@ -520,6 +520,10 @@ function lastOf(value, defaultValue) {
   return fetchValue == null && arguments.length > 1 ? defaultValue : fetchValue;
 };
 
+function _convertCase(a, s, x) {
+  return s + x.toLocaleUpperCase();
+}
+
 /**
 * @function {prettify} Capitalize the first letter of the first word, or optionally capitalize
 * the first letter of every word if *allWords* argument is **true**
@@ -527,18 +531,13 @@ function lastOf(value, defaultValue) {
 * @param {Boolean} {[allWords=false]} If **true**, capitalize the first letter of EVERY word (instead of just the first)
 * @return {String} A prettified string
 */
-function prettify(tempStr, allWords) {
+function prettify(_tempStr, allWords, skipLowerCase) {
+  var tempStr = _tempStr;
   if (root.noe(tempStr)) return '';
 
-  if (allWords) {
-    return ('' + tempStr).toLowerCase().replace(/\b(\w)/gi, function (a, x) {
-      return '' + x.toUpperCase();
-    });
-  } else {
-    return ('' + tempStr).replace(/^([^\w]*)(\w)(\w+)?/gi, function (a, x, y, z) {
-      var initial = x + y.toUpperCase();return z ? initial + z.toLowerCase() : initial;
-    });
-  }
+  if (allWords && skipLowerCase !== true) tempStr = tempStr.toLocaleLowerCase();
+
+  return ('' + tempStr).replace(allWords ? /(^|\s)(\S)/gi : /^(\s*)(\S)/i, _convertCase);
 }
 
 /**
