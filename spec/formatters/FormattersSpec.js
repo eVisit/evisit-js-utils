@@ -1,5 +1,5 @@
 describe('prop', function() {
-  var formatters = require('../../lib/formatters');
+  var formatters = require('../../dist/formatters');
 
   beforeEach(function() {
   });

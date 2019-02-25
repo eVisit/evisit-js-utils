@@ -1,5 +1,5 @@
 describe('prop', function() {
-	var utils = require('../../lib/utils'),
+	var utils = require('../../dist/utils'),
 			obj;
 
 	beforeEach(function() {
@@ -72,5 +72,35 @@ describe('prop', function() {
     expect(utils.get(obj, 'deep.list[0]')).toBe('FIRST');
     expect(utils.get(obj, 'deep.list[1]')).toBe('SECOND');
     expect(utils.get(obj, 'deep.list[2].more')).toBe('HOLY MOLY!');
+  });
+
+  it('should be able to safeJSONStringify and safeJSONParse', function() {
+    var a = { derp: 1, stuff: 'hello' },
+        c = {
+          test: true,
+          stuff: false, toJSON: () => {
+            return {
+              something: 'else',
+              yep: true,
+              b
+            };
+          }
+        },
+        b = [ { hello: new Date(), things: true, deep: a }, c ];
+
+    a.parent = b;
+
+    var serialized = utils.safeJSONStringify(b);
+    expect(serialized.indexOf('::@id@::') > 0).toBe(true);
+
+    var deserialized = utils.safeJSONParse(serialized);
+
+    expect(deserialized[0].things).toBe(true);
+    expect(deserialized[0].deep.derp).toBe(1);
+    expect(deserialized[0].deep.stuff).toBe('hello');
+    expect(deserialized[0].deep.parent).toBe(deserialized);
+    expect(deserialized[1].something).toBe('else');
+    expect(deserialized[1].yep).toBe(true);
+    expect(deserialized[1].b).toBe(deserialized);
   });
 });

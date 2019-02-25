@@ -887,10 +887,13 @@ function uuid() {
 
 // Safely serialize possibly cyclic JSON
 function safeJSONStringify(obj, formatter, space) {
-  function safeCloneObj(key, value, _alreadyVisited) {
-    if (!value) return value;
+  function safeCloneObj(key, _value, _alreadyVisited) {
+    var value = _value;
+    if (value == null) return value;
 
     if (typeof value === 'string' || value instanceof String || typeof value === 'number' || value instanceof Number || typeof value === 'boolean' || value instanceof Boolean) return value.valueOf();
+
+    if (typeof value === 'bigint') return value;
 
     var alreadyVisited = _alreadyVisited || [],
         index = alreadyVisited.findIndex(function (obj) {
@@ -899,6 +902,8 @@ function safeJSONStringify(obj, formatter, space) {
 
     // Has this value already been stored (cyclic)?
     if (index >= 0) return '::@' + index + '@::';
+
+    if (typeof value.toJSON === 'function') value = value.toJSON.call(value, '');
 
     var keys = Object.keys(value),
         valueCopy = value instanceof Array ? new Array(value.length) : {};
@@ -912,7 +917,11 @@ function safeJSONStringify(obj, formatter, space) {
 
     for (var i = 0, il = keys.length; i < il; i++) {
       var key = keys[i],
-          thisValue = safeCloneObj(key, value[key], alreadyVisited);
+          thisValue = value[key];
+
+      if (thisValue && typeof thisValue.toJSON === 'function') thisValue = thisValue.toJSON(key);
+
+      if (thisValue !== null) thisValue = safeCloneObj(key, thisValue, alreadyVisited);
 
       valueCopy[key] = thisValue;
     }
@@ -996,6 +1005,8 @@ function safeJSONParse(data) {
 
     // If it is simple, just return the value
     if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean' || obj instanceof Array) return obj;
+
+    if (data.indexOf('::@id@::') < 0) return obj;
 
     // Build object reference table
     var refs = {};

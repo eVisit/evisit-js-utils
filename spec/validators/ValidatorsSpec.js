@@ -1,5 +1,5 @@
 describe('prop', function() {
-  var validators = require('../../lib/validators');
+  var validators = require('../../dist/validators');
 
   beforeEach(function() {
   });
@@ -30,7 +30,7 @@ describe('prop', function() {
 
   it('should be able to chain validators', async function(done) {
     var validatorFunc = validators.validatorFunction('required,email');
-    
+
     validatorFunc('derp', 'validate').then(function() {
       fail('I should not have succeeded!');
       done();
@@ -55,7 +55,7 @@ describe('prop', function() {
 
   it('should be able to pass validators static arguments', async function(done) {
     var validatorFunc = validators.validatorFunction('email(test:derp,hello:true)');
-    
+
     validatorFunc('derp@test.com', 'validate').then(function(result) {
       expect(result).toEqual(jasmine.any(Array));
       expect(result[0]).toBe('derp@test.com');
@@ -72,7 +72,7 @@ describe('prop', function() {
 
   it('should be able to change validators message', async function(done) {
     var validatorFunc = validators.validatorFunction('required(message:Hawt dog! It is empty!)');
-    
+
     validatorFunc(null, 'validate').then(function(result) {
       fail('I should not have succeeded!');
       done();
