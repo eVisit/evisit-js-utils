@@ -663,15 +663,32 @@ function getFunctionsAndArguments(str) {
 
 //Create a chain of formatter / validator functions
 function formatterValidatorChainFactory(funcPool, _funcs, _args) {
+  function wrapFunction(func) {
+    return function (val, op, args) {
+      var ret;
+
+      try {
+        ret = func.apply(this, arguments);
+      } catch (e) {
+        ret = e;
+      }
+
+      return {
+        args: args,
+        value: ret
+      };
+    };
+  }
+
   var self = this,
       funcs = _funcs,
       args = _args;
 
   if (!funcs) {
-    funcs = [function (v, o, a) {
+    funcs = [wrapFunction(function (v, o, a) {
       if (o === 'validate') return;
       return v;
-    }];
+    })];
   } else if (instanceOf(funcs, 'string', 'array')) {
     if (!(funcs instanceof Array)) funcs = [funcs];
 
@@ -705,13 +722,13 @@ function formatterValidatorChainFactory(funcPool, _funcs, _args) {
           }
         }
       } else if (func instanceof Function) {
-        finalFuncs.push(func);
+        finalFuncs.push(wrapFunction(func));
       }
     }
 
     funcs = finalFuncs;
   } else if (instanceOf(funcs, 'function')) {
-    funcs = [funcs];
+    funcs = [wrapFunction(funcs)];
   } else {
     throw 'Error: Arguments not supported';
   }

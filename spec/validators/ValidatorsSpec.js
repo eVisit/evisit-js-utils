@@ -4,6 +4,36 @@ describe('prop', function() {
   beforeEach(function() {
   });
 
+  it('should be able to use a direct function validator', async function(done) {
+    var validatorFunc1 =  validators.validatorFunction(function(val, op, args) {
+                            if (val === 'derp@test.com')
+                              return { type: 'error', message: 'Failure!' };
+                          }),
+        validatorFunc2 =  validators.validatorFunction(function(val, op, args) {
+                            if (val !== 'derp@test.com')
+                              return { type: 'error', message: 'Failure!' };
+                          });
+
+    validatorFunc1('derp@test.com', 'validate').then(function(result) {
+      fail('I should not have failed!');
+      done();
+    }).catch(function(error) {
+      expect(error.error).toBeTruthy();
+      expect(error.error.type).toBe('error');
+      expect(error.error.message).toBe('Failure!');
+
+      validatorFunc2('derp@test.com', 'validate').then(function(result) {
+        expect(result).toEqual(jasmine.any(Array));
+        expect(result[0]).toBe('derp@test.com');
+        expect(result[1]).toBe('validate');
+        done();
+      }).catch(function(error) {
+        fail('I should not have failed!');
+        done();
+      });
+    });
+  });
+
   it('should be able to create and use a validator', async function(done) {
     var validatorFunc = validators.validatorFunction('required');
     validatorFunc(undefined, 'validate').then(function() {
