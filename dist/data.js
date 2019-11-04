@@ -55,6 +55,7 @@ function extend() {
         var keys = Object.keys(thisArg);
         for (var j = 0, jLen = keys.length; j < jLen; j++) {
           var key = keys[j];
+          if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
 
           if (allowOverwrite !== true && dst.hasOwnProperty(key)) continue;
 
@@ -82,6 +83,7 @@ function extend() {
         var keys = Object.keys(thisArg);
         for (var j = 0, jLen = keys.length; j < jLen; j++) {
           var key = keys[j];
+          if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
 
           if (allowOverwrite !== true && dst.hasOwnProperty(key)) continue;
 
