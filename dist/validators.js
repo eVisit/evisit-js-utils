@@ -101,10 +101,9 @@ var validators = {
   'phone': function phone(val, op, args) {
     if (_utils2.default.noe(val)) return;
 
-    var message = args.message || 'Invalid phone number',
-        re = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
+    var message = args.message || 'Invalid phone number';
 
-    if (!re.test(val)) return { type: 'error', message: message };
+    if (('' + val).replace(/\D/g, '').length < 10) return { type: 'error', message: message };
   }
 };
 
