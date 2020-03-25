@@ -222,7 +222,7 @@ function prop(cmd, _node, namespace) {
 
         if (part) finalPath.push(isArrayIndex ? '[' + part + ']' : part);
       } else {
-        if (prop === undefined || prop === null || (typeof prop === 'number' || prop instanceof Number) && (isNaN(prop) || !isFinite(prop))) return arguments[argStartIndexOne];
+        if (prop === undefined || prop === null || (typeof prop === 'number' || prop instanceof Number) && (isNaN(prop) || !isFinite(prop))) return argStartIndexOne >= arguments.length ? prop : arguments[argStartIndexOne];
         context = prop;
       }
     }
@@ -251,7 +251,7 @@ function prop(cmd, _node, namespace) {
 
   if (op & GET) {
     //Do we need to return the default value?
-    if (prop === undefined || prop === null || (typeof prop === 'number' || prop instanceof Number) && (isNaN(prop) || !isFinite(prop))) return arguments[argStartIndexOne];
+    if (prop === undefined || prop === null || (typeof prop === 'number' || prop instanceof Number) && (isNaN(prop) || !isFinite(prop))) return argStartIndexOne >= arguments.length ? prop : arguments[argStartIndexOne];
     return prop;
   }
 

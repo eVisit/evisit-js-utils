@@ -5,6 +5,7 @@ describe('prop', function() {
 	beforeEach(function() {
     obj = {
     	hello: 'World',
+      nullKey: null,
     	deep: {
     		list: [
     			'first',
@@ -51,6 +52,8 @@ describe('prop', function() {
     expect(utils.get(obj, 'deep.list[0]')).toBe('first');
     expect(utils.get(obj, 'deep.list[1]')).toBe('second');
     expect(utils.get(obj, 'deep.list[2].more')).toBe('yes, more');
+    expect(utils.get(obj, 'nullKey')).toBe(null);
+    expect(utils.get(obj, 'nullKey', undefined)).toBe(undefined);
   });
 
   it('should be able to set a property', function() {
